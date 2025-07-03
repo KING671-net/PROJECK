@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Auto Klik Link</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 2px solid #fdbb2d;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fdbb2d;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            padding: 0;
+        }
+        
+        .left-panel {
+            flex: 1;
+            padding: 25px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .right-panel {
+            flex: 1;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .panel-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fdbb2d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .panel-title i {
+            color: #fdbb2d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #fdbb2d;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        #startBtn {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+        }
+        
+        #stopBtn {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .status-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #fdbb2d;
+        }
+        
+        #status {
+            font-size: 1.3rem;
+            font-weight: 600;
+            min-height: 30px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fdbb2d;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .log-content {
+            min-height: 180px;
+        }
+        
+        .log-entry {
+            padding: 8px 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .log-time {
+            color: #fdbb2d;
+            min-width: 70px;
+        }
+        
+        .log-message {
+            flex: 1;
+        }
+        
+        .info {
+            color: #4da6ff;
+        }
+        
+        .success {
+            color: #6eff8b;
+        }
+        
+        .error {
+            color: #ff6e6e;
+        }
+        
+        #websiteFrame {
+            width: 100%;
+            height: 300px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .instructions {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .instructions h3 {
+            color: #fdbb2d;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .left-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-robot"></i> Bot Auto Klik Link</h1>
+            <p class="subtitle">Otomatisasi klik pada link website secara periodik</p>
+        </header>
+        
+        <div class="content">
+            <div class="left-panel">
+                <h2 class="panel-title"><i class="fas fa-cog"></i> Konfigurasi Bot</h2>
+                
+                <div class="form-group">
+                    <label for="websiteUrl"><i class="fas fa-globe"></i> URL Website:</label>
+                    <input type="url" id="websiteUrl" placeholder="Masukkan URL website (contoh: https://example.com)" value="https://example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="linkSelector"><i class="fas fa-mouse-pointer"></i> Link Selector:</label>
+                    <input type="text" id="linkSelector" placeholder="CSS selector untuk link (contoh: a.more-link)" value="a">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clickInterval"><i class="fas fa-clock"></i> Interval Klik (detik):</label>
+                    <input type="number" id="clickInterval" min="1" max="60" value="3">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clickCount"><i class="fas fa-mouse"></i> Jumlah Klik:</label>
+                    <input type="number" id="clickCount" min="1" max="1000" value="10" placeholder="0 untuk tanpa batas">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clickMode"><i class="fas fa-tasks"></i> Mode Klik:</label>
+                    <select id="clickMode">
+                        <option value="sequential">Sequential (berurutan)</option>
+                        <option value="random">Random (acak)</option>
+                        <option value="first">Link Pertama</option>
+                    </select>
+                </div>
+                
+                <div class="btn-group">
+                    <button id="startBtn"><i class="fas fa-play"></i> Mulai Bot</button>
+                    <button id="stopBtn" disabled><i class="fas fa-stop"></i> Hentikan</button>
+                </div>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> Cara Menggunakan:</h3>
+                    <ul>
+                        <li>Masukkan URL website yang ingin diotomatisasi</li>
+                        <li>Tentukan selector untuk link yang ingin diklik</li>
+                        <li>Atur interval waktu antara klik</li>
+                        <li>Tentukan jumlah klik yang diinginkan</li>
+                        <li>Pilih mode klik (berurutan, acak, atau link pertama)</li>
+                        <li>Klik tombol "Mulai Bot" untuk memulai proses</li>
+                        <li>Pantau aktivitas di panel log</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <h2 class="panel-title"><i class="fas fa-chart-line"></i> Status & Aktivitas</h2>
+                
+                <div class="status-box">
+                    <div class="status-title">Status Bot:</div>
+                    <div id="status">Menunggu untuk memulai...</div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="clicksCount">0</div>
+                        <div class="stat-label">Total Klik</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="linksCount">0</div>
+                        <div class="stat-label">Link Ditemukan</div>
+                    </div>
+                </div>
+                
+                <div class="log-container">
+                    <div class="log-header">
+                        <span>Log Aktivitas:</span>
+                        <span><i class="fas fa-sync-alt" id="clearLogs"></i></span>
+                    </div>
+                    <div class="log-content" id="logContent">
+                        <div class="log-entry">
+                            <span class="log-time">[00:00:00]</span>
+                            <span class="log-message">Sistem siap. Silakan konfigurasi bot dan klik Mulai.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <iframe id="websiteFrame"></iframe>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Bot Auto Klik Link &copy; 2023 | Untuk penggunaan edukasi dan pengujian</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const statusEl = document.getElementById('status');
+        const clicksCountEl = document.getElementById('clicksCount');
+        const linksCountEl = document.getElementById('linksCount');
+        const logContent = document.getElementById('logContent');
+        const clearLogsBtn = document.getElementById('clearLogs');
+        const websiteFrame = document.getElementById('websiteFrame');
+        
+        // Bot variables
+        let botInterval;
+        let botActive = false;
+        let clickCounter = 0;
+        let linksFound = 0;
+        
+        // Add log entry
+        function addLog(message, type = 'info') {
+            const now = new Date();
+            const timeString = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-time">${timeString}</span>
+                <span class="log-message ${type}">${message}</span>
+            `;
+            
+            logContent.appendChild(logEntry);
+            logContent.scrollTop = logContent.scrollHeight;
+        }
+        
+        // Simulate link click
+        function clickLink() {
+            if (!botActive) return;
+            
+            try {
+                // Get config values
+                const websiteUrl = document.getElementById('websiteUrl').value;
+                const selector = document.getElementById('linkSelector').value;
+                const clickMode = document.getElementById('clickMode').value;
+                const totalClicks = parseInt(document.getElementById('clickCount').value);
+                
+                // Update iframe source
+                websiteFrame.src = websiteUrl;
+                websiteFrame.style.display = 'block';
+                
+                // Get links from iframe
+                const iframeDoc = websiteFrame.contentDocument || websiteFrame.contentWindow.document;
+                const links = iframeDoc.querySelectorAll(selector);
+                linksFound = links.length;
+                linksCountEl.textContent = linksFound;
+                
+                if (links.length === 0) {
+                    addLog('Tidak ada link yang ditemukan!', 'error');
+                    return;
+                }
+                
+                let linkToClick;
+                
+                // Select link based on mode
+                if (clickMode === 'sequential') {
+                    linkToClick = links[clickCounter % links.length];
+                } else if (clickMode === 'random') {
+                    linkToClick = links[Math.floor(Math.random() * links.length)];
+                } else {
+                    linkToClick = links[0];
+                }
+                
+                // Simulate click
+                linkToClick.click();
+                clickCounter++;
+                clicksCountEl.textContent = clickCounter;
+                
+                // Log the action
+                const linkText = linkToClick.textContent.trim().substring(0, 30) + (linkToClick.textContent.trim().length > 30 ? '...' : '');
+                const href = linkToClick.href;
+                addLog(`Mengklik link: ${linkText} (${href})`, 'success');
+                
+                // Check if we've reached the click count
+                if (totalClicks > 0 && clickCounter >= totalClicks) {
+                    stopBot();
+                    addLog('Target klik telah tercapai!', 'info');
+                }
+            } catch (error) {
+                addLog(`Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Start the bot
+        function startBot() {
+            if (botActive) return;
+            
+            const websiteUrl = document.getElementById('websiteUrl').value;
+            const selector = document.getElementById('linkSelector').value;
+            const interval = parseInt(document.getElementById('clickInterval').value) * 1000;
+            
+            if (!websiteUrl) {
+                addLog('URL website tidak boleh kosong!', 'error');
+                return;
+            }
+            
+            if (!selector) {
+                addLog('Selector link tidak boleh kosong!', 'error');
+                return;
+            }
+            
+            botActive = true;
+            clickCounter = 0;
+            linksFound = 0;
+            
+            statusEl.textContent = 'Bot sedang berjalan...';
+            clicksCountEl.textContent = '0';
+            linksCountEl.textContent = '0';
+            
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            
+            addLog('Memulai bot auto klik...', 'info');
+            addLog(`Website: ${websiteUrl}`, 'info');
+            addLog(`Selector: ${selector}`, 'info');
+            addLog(`Interval: ${interval/1000} detik`, 'info');
+            
+            // Initial click
+            clickLink();
+            
+            // Set interval for subsequent clicks
+            botInterval = setInterval(clickLink, interval);
+        }
+        
+        // Stop the bot
+        function stopBot() {
+            if (!botActive) return;
+            
+            clearInterval(botInterval);
+            botActive = false;
+            
+            statusEl.textContent = 'Bot dihentikan';
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            
+            addLog('Bot dihentikan', 'info');
+            addLog(`Total klik: ${clickCounter}`, 'info');
+        }
+        
+        // Event Listeners
+        startBtn.addEventListener('click', startBot);
+        stopBtn.addEventListener('click', stopBot);
+        clearLogsBtn.addEventListener('click', () => {
+            logContent.innerHTML = '';
+            addLog('Log aktivitas telah dibersihkan', 'info');
+        });
+        
+        // Initialize
+        addLog('Bot siap digunakan. Silakan konfigurasi dan klik "Mulai Bot".');
+    </script>
+</body>
+</html>

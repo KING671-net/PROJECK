@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WER DESIGN - Digital Design Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .lang-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffa502);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-size: 5.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            letter-spacing: 5px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa502, #2ed573, #1e90ff, #ff6b6b);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s ease infinite;
+            position: relative;
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa502, #2ed573, #1e90ff);
+            border-radius: 2px;
+        }
+        
+        .tagline {
+            font-size: 1.6rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 25px auto 0;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Product Grid */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+            width: 100%;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .product-header {
+            padding: 30px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #ffa502, #2ed573, #1e90ff);
+        }
+        
+        .product-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .product-price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #ffd700;
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .product-price::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+        }
+        
+        .product-time {
+            display: inline-block;
+            background: rgba(46, 213, 115, 0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            font-weight: 500;
+            border: 1px solid rgba(46, 213, 115, 0.3);
+        }
+        
+        .product-content {
+            padding: 30px;
+        }
+        
+        .product-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            text-align: center;
+        }
+        
+        .features {
+            margin: 30px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .feature i {
+            color: #00ffaa;
+            margin-right: 15px;
+            font-size: 1.4rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa502);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 25px;
+            box-shadow: 0 7px 20px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .buy-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.6);
+        }
+        
+        .buy-button:hover::before {
+            left: 100%;
+        }
+        
+        .buy-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            height: 0;
+            padding: 0;
+            margin: 0;
+            pointer-events: none;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: auto;
+            font-size: 1rem;
+            opacity: 0.7;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .instagram-link {
+            color: #1e90ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .instagram-link::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #1e90ff;
+            transition: width 0.3s ease;
+        }
+        
+        .instagram-link:hover {
+            color: #ffa502;
+        }
+        
+        .instagram-link:hover::after {
+            width: 100%;
+            background: #ffa502;
+        }
+        
+        /* Animations */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+        
+        .floating:nth-child(1) {
+            background: linear-gradient(180deg, #ff6b6b, transparent);
+            width: 500px;
+            height: 500px;
+            top: 10%;
+            left: 5%;
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .floating:nth-child(2) {
+            background: linear-gradient(180deg, #1e90ff, transparent);
+            width: 400px;
+            height: 400px;
+            bottom: 15%;
+            right: 5%;
+            animation: float 18s infinite ease-in-out;
+        }
+        
+        .floating:nth-child(3) {
+            background: linear-gradient(180deg, #2ed573, transparent);
+            width: 300px;
+            height: 300px;
+            top: 40%;
+            right: 20%;
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .products {
+                grid-template-columns: 1fr;
+                max-width: 700px;
+                margin: 0 auto 60px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-card {
+                max-width: 100%;
+            }
+            
+            .product-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-price {
+                font-size: 2.2rem;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.8rem;
+                letter-spacing: 2px;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+            
+            .product-header {
+                padding: 20px;
+            }
+            
+            .product-content {
+                padding: 20px;
+            }
+            
+            .product-title {
+                font-size: 1.6rem;
+            }
+            
+            .product-price {
+                font-size: 2rem;
+            }
+            
+            .product-description {
+                font-size: 1rem;
+            }
+            
+            .feature {
+                font-size: 0.95rem;
+            }
+            
+            .buy-button {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+            
+            .language-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background elements -->
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+    
+    <div class="container">
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="id">
+                <i class="fas fa-flag"></i> Indonesia
+            </button>
+            <button class="lang-btn" data-lang="en">
+                <i class="fas fa-flag-usa"></i> English
+            </button>
+        </div>
+        
+        <header>
+            <div class="logo">WER DESIGN</div>
+            <p class="tagline" id="tagline">Solusi Profesional untuk Kebutuhan Desain Digital Anda</p>
+        </header>
+        
+        <div class="products">
+            <!-- Produk 1: Logo Making Services -->
+            <div class="product-card" id="product1" onclick="showButton('btn1')">
+                <div class="product-header">
+                    <h2 class="product-title" id="product1-title">LOGO MAKING SERVICES</h2>
+                    <div class="product-price">$3</div>
+                    <div class="product-time" id="product1-time">Pengerjaan kurang dari 1 jam</div>
+                </div>
+                <div class="product-content">
+                    <p class="product-description" id="product1-desc">
+                        Solusi tepat untuk bisnis kecil, media sosial, branding, dan komunitas. 
+                        Dapatkan logo profesional yang mencerminkan identitas merek Anda.
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-paint-brush"></i>
+                            <span id="product1-feature1">Desain logo profesional</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-sync-alt"></i>
+                            <span id="product1-feature2">Revisi 2x gratis</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-file-image"></i>
+                            <span id="product1-feature3">File format PNG, JPG, SVG</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-headset"></i>
+                            <span id="product1-feature4">Dukungan 24 jam</span>
+                        </div>
+                    </div>
+                    <a href="#" class="buy-button hidden" id="btn1">BELI SEKARANG</a>
+                </div>
+            </div>
+            
+            <!-- Produk 2: Website Creation Services -->
+            <div class="product-card" id="product2" onclick="showButton('btn2')">
+                <div class="product-header">
+                    <h2 class="product-title" id="product2-title">WEBSITE CREATION SERVICES</h2>
+                    <div class="product-price">$30</div>
+                    <div class="product-time" id="product2-time">Pengerjaan kurang dari 1 hari</div>
+                </div>
+                <div class="product-content">
+                    <p class="product-description" id="product2-desc">
+                        Solusi sempurna untuk website, produk digital, berita, bisnis, dan kebutuhan lainnya. 
+                        Website responsif dan modern untuk meningkatkan kehadiran online Anda.
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-laptop-code"></i>
+                            <span id="product2-feature1">Website responsif</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-search"></i>
+                            <span id="product2-feature2">Optimasi SEO dasar</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-layer-group"></i>
+                            <span id="product2-feature3">1 halaman utama + 5 halaman internal</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-tools"></i>
+                            <span id="product2-feature4">Dukungan teknis 1 minggu</span>
+                        </div>
+                    </div>
+                    <a href="#" class="buy-button hidden" id="btn2">BELI SEKARANG</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p id="footer-text">© 2023 WER DESIGN. Hak cipta dilindungi.</p>
+            <p id="follow-us">Ikuti kami di <a href="https://www.instagram.com/werdesign1?igsh=MXhoaDUyNXBhdHMyaQ==" class="instagram-link" target="_blank">Instagram</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Data terjemahan
+        const translations = {
+            id: {
+                tagline: "Solusi Profesional untuk Kebutuhan Desain Digital Anda",
+                product1: {
+                    title: "LAYANAN PEMBUATAN LOGO",
+                    time: "Pengerjaan kurang dari 1 jam",
+                    desc: "Solusi tepat untuk bisnis kecil, media sosial, branding, dan komunitas. Dapatkan logo profesional yang mencerminkan identitas merek Anda.",
+                    features: [
+                        "Desain logo profesional",
+                        "Revisi 2x gratis",
+                        "File format PNG, JPG, SVG",
+                        "Dukungan 24 jam"
+                    ]
+                },
+                product2: {
+                    title: "LAYANAN PEMBUATAN WEBSITE",
+                    time: "Pengerjaan kurang dari 1 hari",
+                    desc: "Solusi sempurna untuk website, produk digital, berita, bisnis, dan kebutuhan lainnya. Website responsif dan modern untuk meningkatkan kehadiran online Anda.",
+                    features: [
+                        "Website responsif",
+                        "Optimasi SEO dasar",
+                        "1 halaman utama + 5 halaman internal",
+                        "Dukungan teknis 1 minggu"
+                    ]
+                },
+                buyButton: "BELI SEKARANG",
+                footerText: "© 2025 WER DESIGN. Hak cipta dilindungi.",
+                followUs: "Ikuti kami di"
+            },
+            en: {
+                tagline: "Professional Solutions for Your Digital Design Needs",
+                product1: {
+                    title: "LOGO MAKING SERVICES",
+                    time: "Creation takes less than 1 hour",
+                    desc: "Suitable for small businesses, social media, branding, and communities. Get a professional logo that reflects your brand identity.",
+                    features: [
+                        "Professional logo design",
+                        "2 free revisions",
+                        "PNG, JPG, SVG file formats",
+                        "24/7 support"
+                    ]
+                },
+                product2: {
+                    title: "WEBSITE CREATION SERVICES",
+                    time: "Work takes less than 1 day",
+                    desc: "Perfect solution for websites, digital products, news, business, and other needs. Responsive and modern website to enhance your online presence.",
+                    features: [
+                        "Responsive website",
+                        "Basic SEO optimization",
+                        "1 main page + 5 internal pages",
+                        "1 week technical support"
+                    ]
+                },
+                buyButton: "BUY NOW",
+                footerText: "© 2023 WER DESIGN. All rights reserved.",
+                followUs: "Follow us on"
+            }
+        };
+        
+        // Fungsi untuk mengubah bahasa
+        function changeLanguage(lang) {
+            // Update tombol bahasa
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+            
+            // Update konten halaman
+            document.getElementById('tagline').textContent = translations[lang].tagline;
+            
+            // Update produk 1
+            document.getElementById('product1-title').textContent = translations[lang].product1.title;
+            document.getElementById('product1-time').textContent = translations[lang].product1.time;
+            document.getElementById('product1-desc').textContent = translations[lang].product1.desc;
+            document.getElementById('product1-feature1').textContent = translations[lang].product1.features[0];
+            document.getElementById('product1-feature2').textContent = translations[lang].product1.features[1];
+            document.getElementById('product1-feature3').textContent = translations[lang].product1.features[2];
+            document.getElementById('product1-feature4').textContent = translations[lang].product1.features[3];
+            
+            // Update produk 2
+            document.getElementById('product2-title').textContent = translations[lang].product2.title;
+            document.getElementById('product2-time').textContent = translations[lang].product2.time;
+            document.getElementById('product2-desc').textContent = translations[lang].product2.desc;
+            document.getElementById('product2-feature1').textContent = translations[lang].product2.features[0];
+            document.getElementById('product2-feature2').textContent = translations[lang].product2.features[1];
+            document.getElementById('product2-feature3').textContent = translations[lang].product2.features[2];
+            document.getElementById('product2-feature4').textContent = translations[lang].product2.features[3];
+            
+            // Update tombol beli
+            document.getElementById('btn1').textContent = translations[lang].buyButton;
+            document.getElementById('btn2').textContent = translations[lang].buyButton;
+            
+            // Update footer
+            document.getElementById('footer-text').textContent = translations[lang].footerText;
+            document.getElementById('follow-us').innerHTML = `${translations[lang].followUs} <a href="https://www.instagram.com/werdesign1?igsh=MXhoaDUyNXBhdHMyaQ==" class="instagram-link" target="_blank">Instagram</a>`;
+            
+            // Simpan preferensi bahasa
+            localStorage.setItem('language', lang);
+        }
+        
+        // Fungsi untuk menampilkan tombol beli
+        function showButton(buttonId) {
+            // Sembunyikan semua tombol
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.classList.add('hidden');
+            });
+            
+            // Tampilkan tombol yang dipilih
+            const button = document.getElementById(buttonId);
+            button.classList.remove('hidden');
+            button.style.animation = 'fadeIn 0.5s ease forwards';
+            
+            // Scroll ke tombol
+            button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Event listener untuk tombol bahasa
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                changeLanguage(lang);
+            });
+        });
+        
+        // Event listener untuk tombol beli
+        document.getElementById('btn1').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = 'https://www.instagram.com/werdesign1?igsh=MXhoaDUyNXBhdHMyaQ==';
+        });
+        
+        document.getElementById('btn2').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = 'https://www.instagram.com/werdesign1?igsh=MXhoaDUyNXBhdHMyaQ==';
+        });
+        
+        // Saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set bahasa default
+            const savedLang = localStorage.getItem('language') || 'id';
+            changeLanguage(savedLang);
+            
+            // Animasi kartu produk
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach((card, index) => {
+                card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>
